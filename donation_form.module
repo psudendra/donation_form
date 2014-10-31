@@ -184,6 +184,22 @@ function donation_form($form,&$form_state) {
   return $form;
 }
 
+function donation_form_validate($form, &$form_state) {
+  if ($form_state['values']['gift_amount'] == NULL) {
+    if ($form_state['values']['donation_amount'] == NULL){
+      form_set_error('amount', t('Please enter a gift OR donation amount.'));
+    }
+  }  
+
+  if (strlen($form_state['values']['zip'] != 5)) {
+    form_set_error('zip', t('Please enter a valid ZIP code.'));
+  }
+
+  if (strlen($form_state['values']['phone'] != 10)) {
+    form_set_error('phone', t('Please enter a valid phone number (xxx-xxx-xxxx).'));
+  }
+}
+
 function submit_donation_form($form,$form_state) {
   $db_name = 'donation_form';
 
@@ -206,6 +222,9 @@ function submit_donation_form($form,$form_state) {
      'tribute_state' => $form_state['values']['tribute_state'],
      'tribute_zip' => $form_state['values']['tribute_zip'], 
   ); 
+  if (empty($data['tribute_zip'])){
+    $data['tribute_zip'] = 0;
+  }
 
   drupal_write_record($db_name, $data);
 }
