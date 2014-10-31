@@ -1,0 +1,131 @@
+<?php
+
+function donation_form_schema() {
+  $schema['donation_form'] = array(
+
+    'description' => 'Donation form information.',
+    'fields' => array(
+      'df_id' => array(
+        'description' => 'The primary identifier for donation form table.',
+        'type' => 'serial',
+      ),
+      'gift_amount' => array(
+        'description' => 'Gift Amount',
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),
+
+      'donation_amount' => array(
+        'description' => 'Donation Amount',
+        'type' => 'varchar',
+        'length' => 20,
+      ),
+
+      'first_name' => array(
+        'description' => 'Donator First Name',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+      ),
+
+      'last_name' => array(
+        'description' => 'Donator Last Name',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+      ),
+
+      'address' => array(
+        'description' => 'Donator Address',
+        'type' => 'text',
+        'length' => 200,
+        'not null' => TRUE,
+      ),  
+
+      'city' => array(
+        'description' => 'Donator City',
+        'type' => 'text',
+        'length' => 35,
+        'not null' => TRUE,
+      ),
+
+      'state' => array(
+        'description' => 'Donator State',
+        'type' => 'text',
+        'length' => 32,
+        'not null' => TRUE,
+      ),
+
+      'zip' => array(
+        'description' => 'Donator ZIP',
+        'type' => 'numeric',
+        'not null' => TRUE, 
+      ),
+
+      'email' => array(
+        'description' => 'Donator Email',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ),
+
+      'phone' => array(
+        'description' => 'Donator Phone',
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+      ),
+
+      'gift_type' => array(
+        'description' => 'Gift Type',
+        'type' => 'text',
+        'length' => 150,
+        'not null' => FALSE,
+      ),
+
+      'tribute_name' => array(
+        'description' => 'Tribute Name',
+        'type' => 'varchar',
+        'length' => 65,
+        'not null' => FALSE,
+      ),    
+
+      'letter_tribute_name' => array(
+        'description' => 'Tribute Name for Letter',
+        'type' => 'varchar',
+        'length' => 65,
+        'not null' => FALSE,
+      ),
+
+      'tribute_address' => array(
+        'description' => 'Tribute Address',
+        'type' => 'varchar',
+        'length' => 200,
+        'not null' => FALSE,
+      ),
+
+      'tribute_city' => array(
+        'description' => 'Tribute City',
+        'type' => 'varchar',
+        'length' => 35,
+        'not null' => FALSE,
+      ),
+
+      'tribute_state' => array(
+        'description' => 'Tribute State',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+      ),
+
+      'tribute_zip' => array(
+        'description' => 'Tribute ZIP',
+        'type' => 'numeric',
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('df_id'),
+  );
+  return $schema;
+}

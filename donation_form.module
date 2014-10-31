@@ -1,0 +1,239 @@
+<?php
+/**
+ * @file
+ * Donation Form
+ */
+
+/**
+ * Implements hook_menu()
+ */
+function donation_form_menu() {
+  $items['donation_form'] = array(
+    'title' => 'Donation Form',
+    'description' => 'Edit Donation Form.',
+    'type' => MENU_NORMAL_ITEM,
+    'access arguments' => array('administrator donation form'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('donation_form'),
+  );
+  
+  return $items;
+}
+
+/**
+ * Form
+ */
+function donation_form($form,&$form_state) {
+
+  $form['gift_amount']=array(
+    '#type' => 'radios',
+    '#title' => t('I want to become a monthly supporter with a gift of'),
+    '#options' => array(
+      '$15' => t('$15'), 
+      '$25' => t('$25'),
+      '$50' => t('$50'),
+      '$100' => t('$100'),
+    ),
+  );
+
+  
+  $form['donation_amount']=array(
+    '#type' => 'radios',
+    '#title' => t('Or make a single donation in the amount of'),
+    '#options' => array(
+      '$25' => t('$25'), 
+      '$50' => t('$50'),
+      '$100' => t('$100'),
+      '$250' => t('$250'),
+      '$500' => t('$500'),
+    ),
+  );
+
+  
+  $form['first_name']=array(
+    '#type' => 'textfield',
+    '#title' => t('First Name'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+  );
+
+  $form['last_name']=array(
+    '#type' => 'textfield',
+    '#title' => t('Last Name'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+  );
+
+  $form['address']=array(
+    '#type' => 'textarea',
+    '#title' => t('Address'),
+    '#required' => TRUE,
+  );
+
+  $form['city']=array(
+    '#type' => 'textfield',
+    '#title' => t('City'),
+    '#required' => TRUE,
+    '#size' => 60,
+    '#maxlength' => 128,
+  );
+
+  $form['state']=array(
+    '#type' => 'textfield',
+    '#title' => t('State'),
+    '#size' => 60,
+    '#required' => TRUE,
+    '#maxlength' => 128,
+  );
+
+  $form['zip']=array(
+    '#type' => 'textfield',
+    '#title' => t('Zip'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+  );
+
+  $form['email']=array(
+    '#type' => 'textfield',
+    '#title' => t('Email'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+  );
+
+  $form['phone']=array(
+    '#type' => 'textfield',
+    '#title' => t('Phone'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+  );
+
+  $form['gift_type']=array(
+    '#type' => 'select',
+    '#title' => t('This gift is'),
+    '#options' => array(
+      0 => t(''),
+      1 => t('In memory of'),
+      2 => t('In honor of'),
+    ),
+    '#default_value' => t(''),
+  );
+
+  $form['tribute_name']=array(
+    '#type' => 'textfield',
+    '#title' => t('Tribute Name'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#default_value' => t(''),
+  );
+
+  $form['letter_tribute_name']=array(
+    '#type' => 'textfield',
+    '#title' => t('Name'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#default_value' => t(''),
+  );
+
+  $form['tribute_address']=array(
+    '#type' => 'textfield',
+    '#title' => t('Address'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#default_value' => t(''),
+  );
+
+  $form['tribute_city']=array(
+    '#type' => 'textfield',
+    '#title' => t('City'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#default_value' => t(''),
+  );
+
+  $form['tribute_state']=array(
+    '#type' => 'textfield',
+    '#title' => t('State'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#default_value' => t(''),
+  );
+
+  $form['tribute_zip']=array(
+    '#type' => 'textfield',
+    '#title' => t('ZIP'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#default_value' => t(''),
+  );
+
+  $form['submit']=array(
+    '#type' => 'submit',
+    '#value' => 'submit',
+    '#submit' => array('submit_donation_form'));
+
+  $form['reset']=array(
+    '#type' => 'submit',
+    '#value' => 'reset',
+    '#submit' => array('reset_donation_form'));
+
+  return $form;
+}
+
+function submit_donation_form($form,$form_state) {
+  $db_name = 'donation_form';
+
+  $data = array(
+     'gift_amount' => $form_state['values']['gift_amount'],
+     'donation_amount' => $form_state['values']['donation_amount'],
+     'first_name' => $form_state['values']['first_name'],
+     'last_name' => $form_state['values']['last_name'],
+     'address' => $form_state['values']['address'],
+     'city' => $form_state['values']['city'],
+     'state' => $form_state['values']['state'],
+     'zip' => $form_state['values']['zip'],
+     'email' => $form_state['values']['email'],
+     'phone' => $form_state['values']['phone'],
+     'gift_type' => $form_state['values']['gift_type'],
+     'tribute_name' => $form_state['values']['tribute_name'],
+     'letter_tribute_name' => $form_state['values']['letter_tribute_name'],
+     'tribute_address' => $form_state['values']['tribute_address'],
+     'tribute_city' => $form_state['values']['tribute_city'],
+     'tribute_state' => $form_state['values']['tribute_state'],
+     'tribute_zip' => $form_state['values']['tribute_zip'], 
+  ); 
+
+  drupal_write_record($db_name, $data);
+}
+
+function reset_donation_form() {
+  drupal_goto('donation_form');
+}
+
+/**
+ * Implements hook_permission()
+ */
+function donation_form_permission() {
+  $permissions['administrator donation form'] = array(
+    'title' => t('Edit the Feedback link.'),
+  );
+
+  return $permissions;
+}
+
+/** 
+ * Implements hook_theme
+ */
+function donation_form_block_info (){
+  $info = array();
+  $info['donation form'] = array(
+    'info' => t('Donation Form'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  
+  return $info;
+}
